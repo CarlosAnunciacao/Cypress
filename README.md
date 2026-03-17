@@ -35,21 +35,17 @@ Checkout & Carrinho
 📦 Como rodar o projeto
 
     Clone o repositório:
-    Bash
-
+    
     git clone https://github.com/CarlosAnunciacao/Cypress
 
     Instale as dependências:
-    Bash
-
+    
     npm install
 
     Abra o Cypress:
-    Bash
-
+    
     npx cypress open
 
     Ou execute em modo Headless (terminal):
-    Bash
-
+    
     npx cypress run
