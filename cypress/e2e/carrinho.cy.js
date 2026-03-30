@@ -1,36 +1,26 @@
+import LoginPage from '../support/pages/login.page';
+import InventoryPage from '../support/pages/inventory.page';
+
 describe('Carrinho', () => {
-  
   beforeEach(() => {
-    cy.visit('https://www.saucedemo.com/');
-    cy.get('#user-name').type('standard_user');
-    cy.get('#password').type('secret_sauce');
-    cy.get('[data-test="login-button"]').click();
+    LoginPage.visit();
+    LoginPage.preencherLogin('standard_user', 'secret_sauce');
   });
 
   it('Adicionar produto ao carrinho com sucesso', () => {
-    // Act
-    cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').click();
+    InventoryPage.adicionarMochila();
     cy.screenshot('carrinho-adicionado');
-
-    // Assert
-    cy.get('.shopping_cart_badge')
-      .should('be.visible')
-      .and('have.text', '1');
-
-    cy.get('.shopping_cart_container').click();
-    cy.contains('Sauce Labs Backpack').should('be.visible');
+    
+    InventoryPage.validarBadgeCarrinho(1);
+    InventoryPage.acessarCarrinho();
+    InventoryPage.validarProdutoNoCarrinho('Sauce Labs Backpack');
   });
 
   it('Remover produto do carrinho com sucesso', () => {
-    // Arrange: Passo específico (adicionar antes de remover)
-    cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').click();
-    cy.get('.shopping_cart_badge').should('be.visible');
-
-    // Act
-    cy.get('[data-test="remove-sauce-labs-backpack"]').click();
+    InventoryPage.adicionarMochila();
+    InventoryPage.removerMochila();
     cy.screenshot('produto-removido');
-
-    // Assert
-    cy.get('.shopping_cart_badge').should('not.exist');
+    
+    InventoryPage.validarBadgeCarrinho(0);
   });
 });
